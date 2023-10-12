@@ -81,11 +81,11 @@ void GameUpdate()
 		//	この値を使って角度を求めます
 //		float radian = GetRadian_LengthYX( y, x );
 		//	同じ割合で短くした player_mov を使っても同じ角度がもらえます
-		float radian = GetRadian_LengthYX( player_mov.y, player_mov.x );
 		//	プレイヤーの角度変数は「度」なので、ラジアン角を度に変換して渡します
-		player_rot = TO_DEGREE( radian ); 
 
-	}else{
+	}
+	else
+	{
 		//	押していないので
 		mouse_drag = false;
 
@@ -104,20 +104,19 @@ void GameUpdate()
 		npc_pos.y = GetRand( SCREEN_H );
 	}
 
-	if (player_pos.x > SCREEN_W-CHARA_RADIUS || player_pos.x < 0 + CHARA_RADIUS )
+	if ( (player_pos.x > SCREEN_W || player_pos.x < 0 ) &&  !mouse_drag)
 	{
 		player_mov.x *= -1;
-
-	
-
-		player_rot = TO_DEGREE(atan2f (player_mov.y, player_mov.x) );
+		//player_rot = TO_DEGREE(atan2f (player_mov.y, player_mov.x) );
 	}
-	if (player_pos.y > SCREEN_H - CHARA_RADIUS || player_pos.y < 0 + CHARA_RADIUS)
+	if ( (player_pos.y > SCREEN_H  || player_pos.y < 0 ) && !mouse_drag)
 	{
 		player_mov.y *= -1;
-		player_rot = TO_DEGREE(atan2f(player_mov.y, player_mov.x));
-
+		//player_rot = TO_DEGREE(atan2f(player_mov.y, player_mov.x));
 	}
+
+	float radian = GetRadian_LengthYX(player_mov.y, player_mov.x);
+	player_rot = TO_DEGREE(radian);
 }
 //---------------------------------------------------------------------------------
 //	描画処理
